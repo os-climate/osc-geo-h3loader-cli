@@ -8,7 +8,7 @@
 #
 #####
 
-if [ -z ${ROOT_DIR+x} ] ; then
+if [ -z ${ROOT_DIR+x} ]; then
     echo "Environment variables have not been set.  Run 'source bin/environment.sh'"
     exit 1
 fi
@@ -31,13 +31,14 @@ if [[ "$IS_SOURCED" -eq 0 ]]; then
     exit
 fi
 
-
 VENV_NAME="venv"
 if [[ "$OSTYPE" == "msys" ]]; then
-  # directory on windows
-  source $PROJECT_DIR/$VENV_NAME/Scripts/activate
+    # directory on windows
+    # shellcheck disable=SC1090
+    source "$PROJECT_DIR/$VENV_NAME/Scripts/activate"
 else
-  # directory on linux/MacOS
-  source $PROJECT_DIR/$VENV_NAME/bin/activate
+    # directory on linux/MacOS
+    # shellcheck disable=SC1090
+    source "$PROJECT_DIR/$VENV_NAME/bin/activate"
 fi
 echo "Activated virtual environment: $VENV_NAME"

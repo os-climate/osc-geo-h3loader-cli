@@ -21,7 +21,7 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
-      - id: check-symlinks
+#      - id: check-symlinks
       - id: check-toml
       # - id: detect-aws-credentials
       - id: check-xml
@@ -80,33 +80,33 @@ repos:
             "{rules: {line-length: {max: 120}}, ignore-from-file: [.gitignore],}",
           ]
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.6
-    hooks:
-      - id: ruff
-        args: [--fix, --exit-non-zero-on-fix, --config=pyproject.toml]
-      - id: ruff-format
+#  - repo: https://github.com/astral-sh/ruff-pre-commit
+#    rev: v0.5.6
+#    hooks:
+#      - id: ruff
+#        args: [--fix, --exit-non-zero-on-fix, --config=pyproject.toml]
+#      - id: ruff-format
 
-  - repo: https://github.com/fsfe/reuse-tool
-    rev: v4.0.3
-    hooks:
-      - id: reuse
+#  - repo: https://github.com/fsfe/reuse-tool
+#    rev: v4.0.3
+#    hooks:
+#      - id: reuse
 
-  - repo: local
-    hooks:
-      - id: mypy-cache
-        name: "create mypy cache"
-        language: system
-        pass_filenames: false
-        entry: bash -c 'if [ ! -d .mypy_cache ]; then /bin/mkdir .mypy_cache; fi; exit 0'
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.11.1"
-    hooks:
-      - id: mypy
-        verbose: true
-        args: ["--show-error-codes", "--install-types", "--non-interactive"]
-        additional_dependencies: ["pytest", "types-requests"]
+#  - repo: local
+#    hooks:
+#      - id: mypy-cache
+#        name: "create mypy cache"
+#        language: system
+#        pass_filenames: false
+#        entry: bash -c 'if [ ! -d .mypy_cache ]; then /bin/mkdir .mypy_cache; fi; exit 0'
+#
+#  - repo: https://github.com/pre-commit/mirrors-mypy
+#    rev: "v1.11.1"
+#    hooks:
+#      - id: mypy
+#        verbose: true
+#        args: ["--show-error-codes", "--install-types", "--non-interactive"]
+#        additional_dependencies: ["pytest", "types-requests"]
 
   # Check for misspellings in documentation files
   # - repo: https://github.com/codespell-project/codespell

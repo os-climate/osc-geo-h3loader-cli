@@ -49,9 +49,9 @@ use
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~~
+~~~bash
 source ./bin/environment.sh
-~~~~
+~~~
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -59,47 +59,47 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~~
+~~~bash
 $PROJECT_DIR/bin/venv.sh
-~~~~
+~~~
 
 Once your virtual environment has been created, it can be activated
 as follows (note: you *must* activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~~
+~~~bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~~
+~~~
 
 Install the required libraries as follows:
-~~~~
+~~~bash
 pip install -r requirements.txt
-~~~~
+~~~
 
 
 ## Command Line Interpreter (CLI)
 
 A CLI is available that makes it easy to interact
 with the service:
-~~~~
+~~~bash
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT --help
 
-~~~~
+~~~
 
 ## Registering a Shapefile
 
 Let's first create a shapefile ZIP file.  This will ZIP the
 contents of the directory "./tmp/WORLD" and put it in a
 file called ./tmp/WORLD.zip:
-~~~~
+~~~bash
 cd ./tmp/WORLD ;
 zip -r ../WORLD.zip * ;
 cd - ;
-~~~~
+~~~
 
 Now that we have a ZIP representation of the shapefile,
 let's register it with the repository:
-~~~~
+~~~bash
 REPOSITORY="./repository" ;
 NAME="WORLD" ;
 CONTENTS="./tmp/WORLD.zip" ;
@@ -111,13 +111,13 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT register \
 {
   "status": "successful"
 }
-~~~~
+~~~
 
 ## Viewing Shapefile Inventory in the Repository
 
 Now that we have registered a shapefile, we can see
 what named shapefiles exist in our repository:
-~~~~
+~~~bash
 REPOSITORY="./repository" ;
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT inventory \
     --repository "$REPOSITORY"
@@ -125,14 +125,14 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT inventory 
 [
   "WORLD"
 ]
-~~~~
+~~~
 
 ## Unregistering a Shapefile
 
 Once registered, a shapefile name (and its contents) can be unregistered,
 which will remove it from the repository.  Let's remove the
 previously registered shapefile:
-~~~~
+~~~bash
 REPOSITORY="./repository" ;
 NAME="WORLD" ;
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT unregister \
@@ -142,5 +142,4 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT unregister
 {
   "status": "successful"
 }
-~~~~
-
+~~~

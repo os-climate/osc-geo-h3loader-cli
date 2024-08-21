@@ -36,7 +36,7 @@ For more information see the [h3 website](https://h3geo.org/), or
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~~
+~~~~bash
 source ./bin/environment.sh
 ~~~~
 
@@ -46,7 +46,7 @@ a virtual environment.
 
 To create a new virtual environment (it will create a directory
 called "venv" in your current working directory):
-~~~~
+~~~~bash
 $PROJECT_DIR/bin/venv.sh
 ~~~~
 
@@ -54,12 +54,12 @@ Once your virtual enviornment has been created, it can be activated
 as follows (note: you *must* activate the virtual environment
 for it to be used, and the command requires "source" to ensure
 environment variables to support venv are established correctly):
-~~~~
+~~~~bash
 source $PROJECT_DIR/bin/vactivate.sh
 ~~~~
 
 Install the required libraries as follows:
-~~~~
+~~~~bash
 pip install -r requirements.txt
 ~~~~
 
@@ -77,27 +77,35 @@ the below documentation.
 
 This repo offers a command language interface (CLI) to demonstrate
 this functionality:
-- [Geospatial](/docs/README-geospatial.md): Query information in the Geospatial Data Mesh
-- [Data Loading](/docs/README-loading.md): Interpolate sparse data into H3 cell grid
-- [Shapefile](/docs/README-shapefile.md): Shapefile simplification, statistics, and viewing
-- [Repository](/docs/README-repository.md): Shapefile registration and inventory management
-- [End-to-End Examples](/docs/README-example.md): Examples of datasets taken from loading to visualization
+- [Geospatial](/docs/README-geospatial.md): 
+Query information in the Geospatial Data Mesh
+- [Data Loading](/docs/README-loading.md): 
+Interpolate sparse data into H3 cell grid
+- [Shapefile](/docs/README-shapefile.md): 
+Shapefile simplification, statistics, and viewing
+- [Repository](/docs/README-repository.md): 
+Shapefile registration and inventory management
+- [End-to-End Examples](/docs/README-example.md): 
+Examples of datasets taken from loading to visualization
 
 ## Running tests
 
 (You may need to install pytest)
 
-```
+```bash
 pytest ./test
 ```
 
 ## Branch Naming Guidelines
 
-Each branch should have an associated github issue. Branches should be named as follows:
-`<branch-type>/issue-<issue number>-<short description>`. Where the branch type is one of:
-[feature, bugfix, hotfix], the issue number is the number of the associated issue, and the
-short description is a dash ('-') seperated description of the branch's purpose. This to between
-one and three words if possibble.
+Each branch should have an associated github issue. Branches should be named
+as follows:
+`<branch-type>/issue-<issue number>-<short description>`. 
+Where the branch type is one of:
+[feature, bugfix, hotfix], 
+the issue number is the number of the associated issue, and the
+short description is a dash ('-') seperated description of the branch's purpose.
+This to between one and three words if possibble.
 
 ## Roadmap
 

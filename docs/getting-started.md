@@ -6,9 +6,9 @@
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~~
+~~~bash
 source ./bin/environment.sh
-~~~~
+~~~
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -16,55 +16,59 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~~
+~~~bash
 $PROJECT_DIR/bin/venv.sh
-~~~~
+~~~
 
 Once your virtual environment has been created, it can be activated
 as follows (note: you *must* activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~~
+~~~bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~~
+~~~
 
 Install the required libraries as follows:
-~~~~
+~~~bash
 pip install -r requirements.txt
-~~~~
+~~~
 
 ### Running as a Docker Image
 
-The geo loader can be run either directly on your local machine, or as a docker image.
-If running on directly on a local machine, this section can be skipped.
+The geo loader can be run either directly on your local machine, or as a docker
+image. If running on directly on a local machine, this section can be skipped.
 
-In order to create a docker image the `DOCKER_USERNAME` environment variable must
-be set to a valid username on the docker registry you are publishing to.
+In order to create a docker image the `DOCKER_USERNAME` environment variable
+must be set to a valid username on the docker registry you are publishing to.
 
-A Dockerfile is provided for this service. A docker image for this service can be
-creating using the following script, which will create but not publish the image:
+A Dockerfile is provided for this service. A docker image for this service
+can be creating using the following script, which will create but not
+publish the image:
 
-```
+```bash
 $PROJECT_DIR/bin/dockerize.sh
 ```
 
 In order to publish this image the `DOCKER_TOKEN` environment variable
 must be set to a dockerhub token that is associated with the username set in the
-`DOCKER_USERNAME` environment variable. Additionally the `DOCKER_REGISTRY` environment variable
-msut be set if publising to a custom registry. 
+`DOCKER_USERNAME` environment variable. Additionally, the 
+`DOCKER_REGISTRY` environment variable must be set if publishing 
+to a custom registry. 
 
-Then the below command can be executed to create and publish an image, with the --publish
-argument controlling whether the image is published, and where it is published to.
-The --latest argument controls whether a specific version is published, or whether this version
-will also be published as "latest". The version argument controls what specific version number
+Then the below command can be executed to create and publish an image,
+with the `--publish` argument controlling whether the image is published,
+and where it is published to. The `--latest` argument controls whether a
+specific version is published, or whether this version will also be published
+as "latest". The `--version` argument controls what specific version number
 the image will have when published.
 
-```
+```console
 $PROJECT_DIR/bin/dockerize.sh --publish [false|custom|dockerhub] [--latest] [--version <version>]
 ```
 
-Run this image with the desired CLI command in order to use it. It is recommended that 
-volumes be set up for inputs and outputs, in order to allow persistence of data. 
+Run this image with the desired CLI command in order to use it. It is
+recommended that volumes be set up for inputs and outputs,
+in order to allow persistence of data. 
 
 ### Retrieve shapefiles
 
@@ -74,14 +78,16 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link:
 
 Shapefiles source:
-- [world-administrative-boundaries.zip](https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York):
+- [world-administrative-boundaries.zip][1]
 
-Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
+Retrieved from parent site: 
+https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below (if it does not
+already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -89,7 +95,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -115,7 +121,7 @@ These were retrieved from this parent site: https://data.giss.nasa.gov/gistemp/s
 Create the `data/geo_data/temperatures` directory using the
 below command (if it does not already exist):
 
-~~~
+~~~bash
 mkdir -p data/geo_data/temperatures
 ~~~
 
@@ -127,7 +133,7 @@ CSV that the loader can process. To do this run the below command,
 which will produce a csv for the loader representing data in the month
 of December, in the year 2022:
 
-```
+```bash
 STATIONS="./data/geo_data/temperatures/station_list.txt" ;
 TEMPERATURE="./data/geo_data/temperatures/v4.mean_GISS_homogenized.txt" ;
 OUTPUT="./data/geo_data/temperatures/giss_2022_12.csv"
@@ -141,7 +147,7 @@ python ./examples/loading/common/temp_giss_to_csv.py \
 ### Create directories
 
 Create the directories needed for running the examples:
-~~~
+~~~bash
 mkdir ./tmp
 ~~~
 
@@ -158,14 +164,15 @@ not within this region.
 
 This takes about 1 minute to run.
 
-```
+```bash
 CONFIG_PATH="./examples/getting-started/giss_2022_12.yml" ;
 
 python ./src/cli/cli_load.py load \
 --config_path $CONFIG_PATH
 ```
 
-For more information on loading datasets, see the [loading README](/docs/README-loading.md).
+For more information on loading datasets, see the 
+[loading README](/docs/README-loading.md).
 
 ## Register the new dataset
 
@@ -175,7 +182,7 @@ previously created database. This metadata will be stored in the
 `./tmp/dataset_metadata.duckdb` database, which will be created
 if it does not already exist.
 
-```
+```bash
 DATABASE_DIR="./tmp" ;
 DATASET_NAME="giss_temperature_2022_12_example" ;
 DESCRIPTION="GISS temperature data for December 2022 in Germany" ;
@@ -195,7 +202,7 @@ python ./src/cli/cli_metadata.py $VERBOSE addmeta \
 
 To view the current metadata, run the below command:
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 python ./src/cli/cli_metadata.py $VERBOSE showmeta \
     --database_dir $DATABASE_DIR
@@ -208,7 +215,7 @@ a red color scale, over Germany. The visualization can be seen by
 loading the output file (`./tmp/giss_temperature_dec_2022_6_Germany.html`) in
 a web browser.
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 DATASET="giss_temperature_2022_12_example" ;
 RESOLUTION=6 ;
@@ -240,3 +247,5 @@ python ./src/cli/cli_visualize.py $VERBOSE visualize-dataset \
 --year $YEAR \
 --month $MONTH
 ~~~
+
+[1]: https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York
