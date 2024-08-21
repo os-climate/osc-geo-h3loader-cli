@@ -1,8 +1,9 @@
 # Data Loading Capabilities
 
 This product can load and optionally interpolate input data which contains
-a latitude and longitude into a dataset mapped to H3 cells of a desired resolution.
-H3 (from Uber) cells are used to create a uniform mesh of hexagons to evenly
+a latitude and longitude into a dataset mapped to H3 cells of a desired
+resolution. H3 (from Uber) cells are used to create a uniform mesh of
+hexagons to evenly
 divide the globe at a variety of resolutions.
 
 Once cell attributes are loaded, they will be stored
@@ -18,9 +19,9 @@ of input data points into the database.
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~~
+~~~bash
 source ./bin/environment.sh
-~~~~
+~~~
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -28,28 +29,28 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~~
+~~~bash
 $PROJECT_DIR/bin/venv.sh
-~~~~
+~~~
 
 Once your virtual environment has been created, it can be activated
 as follows (note: you *must* activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~~
+~~~bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~~
+~~~
 
 Install the required libraries as follows:
-~~~~
+~~~bash
 pip install -r requirements.txt
-~~~~
+~~~
 
 ## Command Line Interpreter (CLI)
 
 A CLI is available that makes it easy to interact
 with the service:
-~~~~
+~~~console
 python ./src/cli/cli_load.py $VERBOSE --help
 usage: cli_load.py [-h] [--verbose] {load,initialize,load-pipeline} ...
 
@@ -66,17 +67,19 @@ options:
   -h, --help            show this help message and exit
   --verbose             Enable verbose output
 (venv)
-~~~~
+~~~
 
 ## Loading a dataset
 
 To load a dataset through the command line supply the relevant configuration
-file and run the below command to load it. Output of a successful run of a loader will
-always be a duckdb database stored in the `<database_dir>/<dataset_name>.duckdb`
+file and run the below command to load it. Output of a successful run of a
+loader will always be a duckdb database stored in the 
+`<database_dir>/<dataset_name>.duckdb`
 location, where database_dir, and dataset_name are parameters specified in the
 configuration file.
 
-Example datasets and config files are available in the `./examples/loading` directory
+Example datasets and config files are available in the `./examples/loading`
+directory
 
 ### Assembling a configuration file
 
@@ -125,8 +128,8 @@ There are examples of data loading within the `examples/loading` directory.
 ### Basic loaders
 
 The `examples/loading/basic` directory contains two examples, both of which use
-the data in the no_date_no_header file. This file contains a very small amount of data
-that will demonstrate the most basic abilities of the loader.
+the data in the no_date_no_header file. This file contains a very small 
+amount of data that will demonstrate the most basic abilities of the loader.
 
 #### h3 example
 
@@ -134,7 +137,7 @@ This example demonstrates the ability to create a very minimal h3 dataset.
 This will create an output file at `./tmp/h3_no_header.duckdb` containing the
 loaded dataset.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/basic/h3_no_header_conf.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -147,7 +150,7 @@ This example demonstrates the ability to create a very minimal point dataset.
 This will create an output file at `./tmp/point_no_header.duckdb` containing the
 loaded dataset.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/basic/point_no_header_conf.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -157,10 +160,10 @@ python ./src/cli/cli_load.py load \
 ### Jamaica Buildings
 
 This example provides a slightly more detailed example of a point dataset.
-This will create an output file at `./tmp/jamaica_buildings.duckdb` containing the
-loaded dataset.
+This will create an output file at `./tmp/jamaica_buildings.duckdb` containing
+the loaded dataset.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/jamaica_buildings/jamaica_building_conf.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -185,14 +188,14 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link:
 
 Shapefiles source:
-- [world-administrative-boundaries.zip](https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York):
+- [world-administrative-boundaries.zip][1]:
 
 Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
 Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -200,7 +203,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -214,19 +217,20 @@ data
 ##### GISS Data Retrieval
 
 The GISS temperature dataset contains data on global temperatures,
-and is used as the raw data for the examples in this README. It is used as sample
-data for some of the below examples. It can be retrieved from the below links:
+and is used as the raw data for the examples in this README. It is used as
+sample data for some of the below examples. 
+It can be retrieved from the below links:
 
 GISS Temperature:
-- [v4.mean_GISS_homogenized.txt](https://data.giss.nasa.gov/gistemp/station_data_v4_globe/v4.mean_GISS_homogenized.txt.gz)
-- [stations.txt](https://data.giss.nasa.gov/gistemp/station_data_v4_globe/station_list.txt)
+- [v4.mean_GISS_homogenized.txt][2]
+- [stations.txt][3]
 
 These were retrieved from this parent site: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/
 
 Create the `data/geo_data/temperatures` directory using the
 below command (if it does not already exist):
 
-~~~
+~~~bash
 mkdir -p data/geo_data/temperatures
 ~~~
 
@@ -238,7 +242,7 @@ CSV that the loader can process. To do this run the below command,
 which will produce a csv for the loader representing data in the month
 of December, in the year 2022:
 
-```
+```bash
 STATIONS="./data/geo_data/temperatures/station_list.txt" ;
 TEMPERATURE="./data/geo_data/temperatures/v4.mean_GISS_homogenized.txt" ;
 OUTPUT="./data/geo_data/temperatures/giss_2022_12.csv"
@@ -251,10 +255,11 @@ python ./examples/loading/common/temp_giss_to_csv.py \
 
 #### Running the example
 
-Running the below script will generate the `tmp/giss_temperature_2022_12_example.duckdb`
+Running the below script will generate the 
+`tmp/giss_temperature_2022_12_example.duckdb`
 file, which contains the output of this example.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/giss_temperature/giss_2022_12.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -280,14 +285,15 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link:
 
 Shapefiles source:
-- [world-administrative-boundaries.zip](https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York):
+- [world-administrative-boundaries.zip][1]
 
 Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -295,7 +301,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -307,18 +313,20 @@ data
 ~~~
 
 
-In addition a simple shapefile that selects a small rectangle of northeast Germany is available
+In addition a simple shapefile that selects a small rectangle of northeast
+Germany is available
 in the `examples/loading/flood_data/nw_germany_shapefile` location.
 
-Create the `./data/shapefiles/custom/nw_germany_shapefile` directory to hold these files:
-~~~
+Create the `./data/shapefiles/custom/nw_germany_shapefile` directory to hold
+these files:
+~~~bash
 mkdir -p ./data/shapefiles/custom/nw_germany_shapefile
 ~~~
 
-Then copy the files from `examples/loading/flood_data/nw_germany_shapefile` directory
-to the `./data/shapefiles/custom/nw_germany_shapefile` directory.
+Then copy the files from `examples/loading/flood_data/nw_germany_shapefile`
+directory to the `./data/shapefiles/custom/nw_germany_shapefile` directory.
 
-~~~
+~~~bash
 cp ./examples/loading/flood_data/nw_germany_shapefile/* ./data/shapefiles/custom/nw_germany_shapefile
 ~~~
 
@@ -331,19 +339,21 @@ data is 5GB in size.
 It can be retrieved from the below link
 - [Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip](https://data.4tu.nl/file/df7b63b0-1114-4515-a562-117ca165dc5b/5e6e4334-15b5-4721-a88d-0c8ca34aee17)
 
-Which was retrieved from this [parent site](https://data.4tu.nl/articles/dataset/Pan-European_data_sets_of_river_flood_probability_of_occurrence_under_present_and_future_climate/12708122)
+Which was retrieved from this 
+[parent site](https://data.4tu.nl/articles/dataset/Pan-European_data_sets_of_river_flood_probability_of_occurrence_under_present_and_future_climate/12708122)
 
 Create the `data/geo_data/flood/europe_flood_data` directory as below:
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data
 ~~~
 
-Unzip the `Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip`
+Unzip the `Pan-European data sets of river flood probability
+of occurrence under present and future climate_1_all.zip`
 file into the `data/geo_data/flood/europe_flood_data` directory.
 This should result in a directory structure that looks like the below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -354,14 +364,15 @@ data
 
 Create the `data/geo_data/flood/europe_flood_data/data` directory as below
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data/data
 ~~~
 
-Unzip the `data.zip` file into the `./data/geo_data/flood/europe_flood_data/data`
+Unzip the `data.zip` file into the 
+`./data/geo_data/flood/europe_flood_data/data`
 directory. This should result in a file structure like below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -378,7 +389,7 @@ Once the information is retrieved, it must be turned into a parquet file that
 the loader can process. To do that run the below file:
 
 for Germany
-```
+```bash
 RAW="./data/geo_data/flood/europe_flood_data/data/River_flood_depth_1971_2000_hist_0010y.tif" ;
 OUT="./tmp/flood_germany.parquet" ;
 FILTER="Germany" ;
@@ -391,7 +402,7 @@ python ./examples/common/flood_to_parquet.py \
 
 for nw germany
 
-```
+```bash
 RAW="./data/geo_data/flood/europe_flood_data/data/River_flood_depth_1971_2000_hist_0010y.tif" ;
 OUT="./tmp/flood_nw_germany.parquet" ;
 FILTER="NW_Germany" ;
@@ -408,7 +419,7 @@ Running this example will generate the `tmp/flood_data.duckdb` file
 as the output of this example. It will contain flood information about
 Germany, up to resolution 7.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/flood_data/flood_data.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -419,7 +430,7 @@ python ./src/cli/cli_load.py load \
 Running this example will generate the `tmp/flood_nw_germany.duckdb` file
 as the output of this example. It will contain flood information about
 northwestern Germany, up to resolution 9.
-```
+```bash
 CONFIG_PATH="./examples/loading/flood_data/flood_data_nw_germany.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -431,7 +442,7 @@ python ./src/cli/cli_load.py load \
 While this dataset uses the same raw data as the h3 Germany example,
 it loads the data as a collection of points, without interpolating.
 
-```
+```bash
 CONFIG_PATH="./examples/loading/flood_data/flood_data_point.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -482,14 +493,16 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link:
 
 Shapefiles source:
-- [world-administrative-boundaries.zip](https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York):
+- [world-administrative-boundaries.zip][1]
 
-Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
+Retrieved from parent site: 
+https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -497,7 +510,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -510,11 +523,12 @@ data
 
 #### Minimal Pipeline
 
-This loading pipeline contains only a reading and an output step, demonstrating the
-smallest and simplest pipeline possible. It will load a dataset that consists of 
+This loading pipeline contains only a reading and an output step,
+demonstrating the smallest and simplest pipeline possible.
+It will load a dataset that consists of 
 6 data points, and put this dataset into a database with no changes. 
 
-```
+```bash
 CONFIG_PATH="./examples/loading/loading_pipeline/minimal_pipeline.yml" ;
 
 python ./src/cli/cli_load.py load-pipeline \
@@ -523,13 +537,18 @@ python ./src/cli/cli_load.py load-pipeline \
 
 #### Full Pipeline
 
-This loading example contains every available type of step. It uses the same dataset
-as the minimal pipeline, and will a) filter for points located in Cuba, 
+This loading example contains every available type of step.
+It uses the same dataset as the minimal pipeline, 
+and will a) filter for points located in Cuba, 
 b) aggregate it down to a single cell, and c) multiply values by 2. 
 
-```
+```bash
 CONFIG_PATH="./examples/loading/loading_pipeline/all_steps.yml" ;
 
 python ./src/cli/cli_load.py load-pipeline \
 --config_path $CONFIG_PATH
 ```
+
+[1]: https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York
+[2]: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/v4.mean_GISS_homogenized.txt.gz
+[3]: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/station_list.txt

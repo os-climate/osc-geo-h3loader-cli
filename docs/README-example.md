@@ -9,9 +9,9 @@ setup operations will have been performed.
 
 Some environment variables are used by the examples.
 Set up these environment variables as follows (note that `source` is used)
-~~~~
+~~~bash
 source ./bin/environment.sh
-~~~~
+~~~
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -19,27 +19,27 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~~
+~~~bash
 $PROJECT_DIR/bin/venv.sh
-~~~~
+~~~
 
 Once your virtual environment has been created, it can be activated
 as follows (note: you *must* activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~~
+~~~bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~~
+~~~
 
 Install the required libraries as follows:
-~~~~
+~~~bash
 pip install -r requirements.txt
-~~~~
+~~~
 
 ### Create directories
 
 Create the directories needed for running the examples:
-~~~
+~~~bash
 mkdir ./tmp
 ~~~
 
@@ -66,8 +66,9 @@ Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/worl
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -75,7 +76,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -98,15 +99,16 @@ Which was retrieved from this [parent site](https://data.4tu.nl/articles/dataset
 
 Create the `data/geo_data/flood/europe_flood_data` directory as below:
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data
 ~~~
 
-Unzip the `Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip`
+Unzip the `Pan-European data sets of river flood probability 
+of occurrence under present and future climate_1_all.zip`
 file into the `data/geo_data/flood/europe_flood_data` directory.
 This should result in a directory structure that looks like the below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -117,14 +119,15 @@ data
 
 Create the `data/geo_data/flood/europe_flood_data/data` directory as below
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data/data
 ~~~
 
-Unzip the `data.zip` file into the `./data/geo_data/flood/europe_flood_data/data`
+Unzip the `data.zip` file into the 
+`./data/geo_data/flood/europe_flood_data/data`
 directory. This should result in a file structure like below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -145,7 +148,7 @@ a parquet file to allow for loading. This will create the output file
 
 This will probably take about 2-5 minutes...
 
-```
+```bash
 RAW="./data/geo_data/flood/europe_flood_data/data/River_flood_depth_1971_2000_hist_0010y.tif" ;
 OUT="./tmp/flood_depth_10_year_belgium.parquet" ;
 FILTER="Belgium" ;
@@ -163,7 +166,7 @@ up to the maximum specified in the configuration file. This will create
 the `./tmp/flood_depth_10_year_belgium.duckdb` file as output. This command
 may take several minutes to execute.
 
-```
+```bash
 CONFIG_PATH="./examples/example/flood_depth_10_year_belgium.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -178,7 +181,7 @@ The below command will register the dataset created in previous steps.
 If no metadata database existed previously, this will create the
 `./tmp/dataset_metadata.duckdb` file.
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 DATASET_NAME="flood_depth_10_year_belgium" ;
 DESCRIPTION="Flood depth in belgium during 10 year flood" ;
@@ -207,7 +210,7 @@ contianing the visualization. This file can be viewed with any internet browser.
 
 This will take about a minute to run.
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 DATASET="flood_depth_10_year_belgium" ;
 RESOLUTION=7 ;
@@ -238,12 +241,14 @@ python ./src/cli/cli_visualize.py $VERBOSE visualize-dataset \
 
 This example provides a script that will automatically iterate through
 many datasets and generate visualizations of them. Note that the script that
-does this will take a very long time (potentially several days) to run to completion.
+does this will take a very long time (potentially several days) 
+to run to completion.
 
 ### Retrieving Data & Shapefiles
 
 The shapefiles and data used in this example are the same as in the Belgium
-example above, so if that example has already been run, this section can be skipped
+example above, so if that example has already been run, 
+this section can be skipped
 
 
 Shapefiles are files that define a geographic region. They are used in this
@@ -259,8 +264,9 @@ Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/worl
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -268,7 +274,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -291,15 +297,16 @@ Which was retrieved from this [parent site](https://data.4tu.nl/articles/dataset
 
 Create the `data/geo_data/flood/europe_flood_data` directory as below:
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data
 ~~~
 
-Unzip the `Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip`
+Unzip the `Pan-European data sets of river flood probability of
+ occurrence under present and future climate_1_all.zip`
 file into the `data/geo_data/flood/europe_flood_data` directory.
 This should result in a directory structure that looks like the below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -310,14 +317,14 @@ data
 
 Create the `data/geo_data/flood/europe_flood_data/data` directory as below
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data/data
 ~~~
 
 Unzip the `data.zip` file into the `./data/geo_data/flood/europe_flood_data/data`
 directory. This should result in a file structure like below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -333,7 +340,7 @@ data
 ### Creating output directory
 
 A directory should be created to hold the output of the script.
-~~~
+~~~bash
 mkdir -p ./tmp/load_all_flood
 ~~~
 
@@ -350,7 +357,7 @@ databases (stored in `./tmp/load_al_flood/databases`),
 parquet files (stored in `./tmp/load_all_flood/parquet`),
 and visualization files (stored in (`./tmp/load_all_flood/visualization`))
 
-~~~
+~~~bash
 python ./examples/example/load_all_flood.py
 ~~~
 
@@ -380,8 +387,9 @@ Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/worl
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -389,7 +397,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -412,15 +420,16 @@ Which was retrieved from this [parent site](https://data.4tu.nl/articles/dataset
 
 Create the `data/geo_data/flood/europe_flood_data` directory as below:
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data
 ~~~
 
-Unzip the `Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip`
+Unzip the `Pan-European data sets of river flood probability
+ of occurrence under present and future climate_1_all.zip`
 file into the `data/geo_data/flood/europe_flood_data` directory.
 This should result in a directory structure that looks like the below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -431,14 +440,15 @@ data
 
 Create the `data/geo_data/flood/europe_flood_data/data` directory as below
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data/data
 ~~~
 
-Unzip the `data.zip` file into the `./data/geo_data/flood/europe_flood_data/data`
+Unzip the `data.zip` file into the 
+`./data/geo_data/flood/europe_flood_data/data`
 directory. This should result in a file structure like below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -457,7 +467,7 @@ There is no loader for tiff files, so the tiff file is first converted to
 a parquet file to allow for loading. This will create the output file
 `./tmp/flood_depth_10_year_spain.parquet`.
 
-~~~
+~~~bash
 RAW="./data/geo_data/flood/europe_flood_data/data/River_flood_depth_1971_2000_hist_0010y.tif" ;
 OUT="./tmp/flood_depth_10_year_spain.parquet" ;
 FILTER="Spain" ;
@@ -475,7 +485,7 @@ of various resolutions, up to the maximum specified in the configuration
 file. This will create the `./tmp/flood_depth_10_year_spain.duckdb` file
 as output.
 
-~~~
+~~~bash
 CONFIG_PATH="./examples/example/correlate_datasets/flood_depth_10_year_spain.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -490,7 +500,7 @@ The below command will register the dataset created in previous steps.
 If no metadata database existed previously, this will create the
 `./tmp/dataset_metadata.duckdb` file.
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 DATASET_NAME="flood_depth_10_year_spain" ;
 DESCRIPTION="Flood depth in Spain during 10 year flood" ;
@@ -515,7 +525,7 @@ scenario asset data will often not be directly available, but instead will
 have a uuid generated and used for correlation, as a means of anonymizing the
 dataset. This script will also generate UUIDs for the dataset.
 
-~~~
+~~~bash
 RAW="./examples/example/correlate_datasets/housing_kaggle_spain 2.json" ;
 OUT="./tmp" ;
 
@@ -528,7 +538,7 @@ python ./examples/example/correlate_datasets/asset_to_parquet.py \
 
 This asset data will then be loaded as a point dataset.
 
-~~~
+~~~bash
 CONFIG_PATH="./examples/example/correlate_datasets/spain_asset_data.yml" ;
 
 python ./src/cli/cli_load.py load \
@@ -544,7 +554,7 @@ The below command will register the dataset created in previous steps.
 If no metadata database existed previously, this will create the
 `./tmp/dataset_metadata.duckdb` file.
 
-~~~
+~~~bash
 DATABASE_DIR="./tmp" ;
 DATASET_NAME="spain_asset_data" ;
 DESCRIPTION="mortgage data in Spain" ;
@@ -561,17 +571,17 @@ python ./src/cli/cli_metadata.py $VERBOSE addmeta \
 ~~~
 
 
-### Running the correlaton
+### Running the correlation
 
 This will load the flood and asset datasets, and join them together,
 figuring out the relevant flood depth for the mortgages in question. This
 occurs in two stages. First a join is done with the anonymized dataset,
 which gets the associated value for each UUID. Then a second stage - which
-will likely be done by whoever provided the asset data within their environment -
-will join this correlated dataset with the original asset data, getting the
-additional fields stripped by the anonymization process.
+will likely be done by whoever provided the asset data within their 
+environment - will join this correlated dataset with the original asset data,
+getting the additional fields stripped by the anonymization process.
 
-~~~
+~~~bash
 FLOOD_DATASET=flood_depth_10_year_spain ;
 ASSET_DATASET=spain_asset_data ;
 NON_ANON_PARQUET="./tmp/housing_kaggle_spain 2_uuid.parquet" ;
@@ -601,10 +611,10 @@ geospatial indices consist of the data aggregated by h3 cell at resolution 7,
 with the minimum, maximum, median, and mean of the data points contained
 within that cell recorded. This sort of index is intended for use cases where
 accessing or performing analysis on the full dataset takes to much time to be
-practical. In such a case the index can be used for faster (but coarser) analysis,
-or used to find areas that meet some filter condition, allowing a much smaller
-subset of the full dataset to be retrieved and processed,
-speeding up the analysis.
+practical. In such a case the index can be used for faster (but coarser) 
+analysis, or used to find areas that meet some filter condition,
+allowing a much smaller subset of the full dataset to be retrieved 
+and processed, speeding up the analysis.
 
 
 ### Retrieving Data & Shapefiles
@@ -625,8 +635,9 @@ Retrieved from parent site: https://public.opendatasoft.com/explore/dataset/worl
 - retrieved as a dataset from the "Geographic file formats" section,
 "Shapefile" element, by clicking the "Whole dataset" link
 
-Create the `data/shapefiles/WORLD` directory as below (if it does not already exist)
-~~~
+Create the `data/shapefiles/WORLD` directory as below 
+(if it does not already exist)
+~~~bash
 mkdir -p ./data/shapefiles/WORLD
 ~~~
 
@@ -634,7 +645,7 @@ Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~
+~~~console
 data
 |-- shapefiles
     |-- WORLD
@@ -657,15 +668,16 @@ Which was retrieved from this [parent site](https://data.4tu.nl/articles/dataset
 
 Create the `data/geo_data/flood/europe_flood_data` directory as below:
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data
 ~~~
 
-Unzip the `Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip`
+Unzip the `Pan-European data sets of river flood probability
+of occurrence under present and future climate_1_all.zip`
 file into the `data/geo_data/flood/europe_flood_data` directory.
 This should result in a directory structure that looks like the below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -676,14 +688,15 @@ data
 
 Create the `data/geo_data/flood/europe_flood_data/data` directory as below
 
-~~~
+~~~bash
 mkdir -p ./data/geo_data/flood/europe_flood_data/data
 ~~~
 
-Unzip the `data.zip` file into the `./data/geo_data/flood/europe_flood_data/data`
+Unzip the `data.zip` file into the 
+`./data/geo_data/flood/europe_flood_data/data`
 directory. This should result in a file structure like below:
 
-~~~
+~~~console
 data
 |-- geo_data
     |-- flood
@@ -700,7 +713,7 @@ data
 ### Creating output directory
 
 A directory should be created to hold the configuration files for this script.
-~~~
+~~~bash
 mkdir -p ./tmp/tudelft_index_conf
 ~~~
 
@@ -711,7 +724,7 @@ configuration files will need to be generated. These lay out
 the process the pipeline is to follow. An example configuration
 file is shown below.
 
-~~~
+~~~yml
 reading_step:
   class_name: "loader.geotiff_reader.GeotiffReader"
   file_path: "./data/geo_data/flood/europe_flood_data/data/River_flood_depth_1971_2000_hist_0010y.tif"
@@ -754,7 +767,7 @@ saved to a local duckdb database in the `./tmp` directory
 
 Generate these configuration files by running the below command
 
-~~~
+~~~bash
 python ./examples/example/generate_tudelft_confs.py
 ~~~
 
@@ -762,13 +775,14 @@ This will create the `./tmp/tudelft_index_conf` directory and will
 create conf files within this directory for the tudelft datasets.
 Examining the `generate_tudelft_confs.py` script for more
 details on how this is accomplished. For more detail on the configuration
-file format see the loading pipeline section of [Data Loading](/docs/README-loading.md)
+file format see the loading pipeline section of 
+[Data Loading](/docs/README-loading.md)
 
 ### Generating the indices
 
 The below command will generate the indices into the `./tmp` directory.
 These indices will be duckdb database files.
 
-~~~
+~~~bash
 python ./examples/example/generate_tudelft_indices.py
 ~~~

@@ -11,7 +11,7 @@
 #
 #####
 
-if [ -z ${HOME_DIR+x} ] ; then
+if [ -z ${HOME_DIR+x} ]; then
     echo "HOME_DIR environment variable has not been set (should be setup in your profile)"
     exit 1
 fi
@@ -20,10 +20,10 @@ export ROOT_DIR="$HOME_DIR"
 export PROJECT="osc-geo-h3loader-cli"
 export PROJECT_DIR="$ROOT_DIR/$PROJECT"
 
-if [ -z ${PYTHONPATH+x} ] ; then
-  export PYTHONPATH="$PROJECT_DIR/src"
+if [ -z ${PYTHONPATH+x} ]; then
+    export PYTHONPATH="$PROJECT_DIR/src"
 else
-  export PYTHONPATH="$PYTHON_PATH:$PROJECT_DIR/src"
+    export PYTHONPATH="$PYTHONPATH:$PROJECT_DIR/src"
 fi
 
-$PROJECT_DIR/bin/show.sh
+"$PROJECT_DIR"/bin/show.sh

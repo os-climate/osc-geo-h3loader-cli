@@ -8,7 +8,7 @@
 #
 #####
 
-if [ -z ${ROOT_DIR+x} ] ; then
+if [ -z ${ROOT_DIR+x} ]; then
     echo "Environment variables have not been set.  Run 'source bin/environment.sh'"
     exit 1
 fi
@@ -28,23 +28,22 @@ function showHelp {
 # your specific version of python to create your
 # virtual environment:
 WINDOWS_PYTHON="python.exe"
-MAC_LINUX_PYTHON="python3"
 MAC_LINUX_PYTHON="/usr/local/bin/python3.10"
 
-get_python_command () {
-  if [[ "$OSTYPE" == "msys" ]]; then
-    echo $WINDOWS_PYTHON
-  else
-    # echo "python3"
-    echo /usr/local/bin/python3.10
-  fi
+get_python_command() {
+    if [[ "$OSTYPE" == "msys" ]]; then
+        echo $WINDOWS_PYTHON
+    else
+        # echo "python3"
+        echo "$MAC_LINUX_PYTHON"
+    fi
 
 }
 
 # Create the virtual environment in a directory called
-cd $PROJECT_DIR
+cd "$PROJECT_DIR" || exit
 NAME="venv"
 
 if [[ ! -d "$NAME" ]]; then
-  $(get_python_command) -m venv $NAME
+    $(get_python_command) -m venv $NAME
 fi
