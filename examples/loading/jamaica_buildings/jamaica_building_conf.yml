@@ -13,4 +13,3 @@ columns:
   latitude: float
   longitude: float
 mode: create
-

@@ -12,4 +12,3 @@ mode: create
 
 shapefile: ./data/shapefiles/custom/nw_germany_shapefile/nw_germany.shp
 region: Rhine
-

@@ -50,5 +50,3 @@ if __name__ == "__main__":
                         f" as it already exists")
         else:
             exec .load_pipeline(file)
-
-

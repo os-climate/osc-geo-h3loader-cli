@@ -14,4 +14,3 @@ def get_point_res_col(resolution: int) -> str:
         )
 
     return f"res{resolution}"
-

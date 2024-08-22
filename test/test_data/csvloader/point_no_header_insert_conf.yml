@@ -13,4 +13,3 @@ columns:
   latitude: float
   mydata: float
 mode: insert
-

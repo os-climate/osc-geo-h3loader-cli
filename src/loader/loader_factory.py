@@ -52,4 +52,3 @@ class LoaderFactory:
     def _create_parquet_loader(conf_dict: Dict[str, Any]) -> ParquetLoader:
         conf = ParquetLoaderConfig(**conf_dict)
         return ParquetLoader(conf)
-

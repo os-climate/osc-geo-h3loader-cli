@@ -100,4 +100,3 @@ class Repository():
         directories = [entry for entry in entries if os.path.isdir(os.path.join(self.repository, entry))]
 
         return directories
-

@@ -13,24 +13,24 @@ function, and they are typically saved in the same directory
 as the `.shp` file. Here's a brief overview of these files:
 
 1. **.shp**: This is the main file containing the geometry
-of the features.
+   of the features.
 
 2. **.shx**: The shape index file. It stores the positional
-index of the geometric data for efficient access and reading.
+   index of the geometric data for efficient access and reading.
 
 3. **.dbf**: The attribute format file. It stores tabular
-attribute information associated with the shapefile. Each
-row corresponds to a shape, and each column holds an attribute.
+   attribute information associated with the shapefile. Each
+   row corresponds to a shape, and each column holds an attribute.
 
 4. **.prj**: The projection file. It contains information
-about the coordinate system and projection information used
-for the geometries in the shapefile.
+   about the coordinate system and projection information used
+   for the geometries in the shapefile.
 
 5. **.cpg**: The code page file (optional). It specifies the
-character encoding used in the `.dbf` file.
+   character encoding used in the `.dbf` file.
 
 6. **.sbn** and **.sbx**: Spatial index files (optional). Used
-by some software for quicker spatial querying.
+   by some software for quicker spatial querying.
 
 When you use the `to_file()` method in Geopandas, at a minimum,
 the `.shp`, `.shx`, and `.dbf` files are created in the
@@ -51,16 +51,16 @@ shapefile's data and should be kept together to maintain data
 integrity. If you transfer the shapefile, you need to include
 all these associated files.
 
-
 ## Prerequisites
 
 ### Setting up your Environment
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~bash
+
+```bash
 source ./bin/environment.sh
-~~~
+```
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -68,23 +68,25 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~bash
+
+```bash
 $PROJECT_DIR/bin/venv.sh
-~~~
+```
 
 Once your virtual environment has been created, it can be activated
-as follows (note: you *must* activate the virtual environment
+as follows (note: you _must_ activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~bash
+
+```bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~
+```
 
 Install the required libraries as follows:
-~~~bash
-pip install -r requirements.txt
-~~~
 
+```bash
+pip install -r requirements.txt
+```
 
 ## Retrieving Shapefiles
 
@@ -94,24 +96,27 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link (if not already downloaded)
 
 Shapefiles source:
+
 - [world-administrative-boundaries.zip][1]
 
-Retrieved from parent site: 
-https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
+Retrieved from parent site:
+<https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/>
+
 - retrieved as a dataset from the "Geographic file formats" section,
-"Shapefile" element, by clicking the "Whole dataset" link
+  "Shapefile" element, by clicking the "Whole dataset" link
 
 Create the `data/shapefiles/WORLD` directory as below (if it does not already
 exist)
-~~~bash
+
+```bash
 mkdir -p ./data/shapefiles/WORLD
-~~~
+```
 
 Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~console
+```console
 data
 |-- shapefiles
     |-- WORLD
@@ -120,11 +125,12 @@ data
         |-- world-adminstrative-boundaries.dbf
         |-- world-adminstrative-boundaries.shp
         |-- world-adminstrative-boundaries.shx
-~~~
+```
 
 A shapefile for Canada is available below
 
 Canada Shapefile
+
 - [website][2]
   - From the Boundary file options, select:
     - Language: English
@@ -132,22 +138,22 @@ Canada Shapefile
     - Administrative boundaries: Census divisions
     - Format: Shapefile (.shp)
   - Then hit the continue button.
-  - This should bring up a link labeled 
-  `lcd_000b21a_e.zip (ZIP version, 136,594.0 kb)`
+  - This should bring up a link labeled
+    `lcd_000b21a_e.zip (ZIP version, 136,594.0 kb)`
     - click this link to download the `lcd_000b21a_e.zip` file
 
 Create the `./data/shapefiles/CAN` directory to hold this shapefile
 
-~~~bash
+```bash
 mkdir -p ./data/shapefiles/CAN
-~~~
+```
 
 Unzip the `lcd_000b21a_e.zip` file into the `./data/shapefiles/CAN`
 
 This should result in a
 directory structure that looks like below:
 
-~~~console
+```console
 data
 |-- shapefiles
     |-- CAN
@@ -156,21 +162,21 @@ data
         |-- lcd_000b21a_e.shp
         |-- lcd_000b21a_e.shx
         |-- lcd_000b21a_e.xml
-~~~
+```
 
 The canada shapefile will need to be converted to wgs84 format. Use the below
 command to do so (this may take several minutes):
 
-~~~bash
+```bash
 SHAPEFILE="./data/shapefiles/CAN/lcd_000b21a_e.shp" ;
 python ./src/cli/cli_shapefile.py $VERBOSE \
     --host $HOST --port $PORT transform \
     --shapefile "$SHAPEFILE"
-~~~
+```
 
 This will generate the file structure seen below
 
-~~~console
+```console
 data
 |-- shapefiles
     |-- CAN
@@ -185,33 +191,34 @@ data
         |-- lcd_000b21a_e-wgs84.shp
         |-- lcd_000b21a_e-wgs84.shx
 
-~~~
+```
 
 A shapefile for the USA is available below:
 
 USA Shapefile:
+
 - [website][3]
   - There will be a section of the page with the following headings:
-2023, 2023 TIGER/Line Shapefiles, Download
+    2023, 2023 TIGER/Line Shapefiles, Download
   - Select the "Web Interface" link from this section
   - select 2023 as the year, and "Counties (and equivalent)" as the Layer
   - Hit the submit button
     - This will bring up a different page
   - Click the "Download national file" button. This will download the
-`tl_2023_us_county.zip` file
+    `tl_2023_us_county.zip` file
 
 Create the `./data/shapefiles/USA` directory to hold this shapefile
 
-~~~bash
+```bash
 mkdir -p ./data/shapefiles/USA
-~~~
+```
 
 Unzip the `tl_2023_us_county.zip` file into the `./data/shapefiles/USA`
 
 This should result in a
 directory structure that looks like below:
 
-~~~console
+```console
 data
 |-- shapefiles
     |-- USA
@@ -222,14 +229,14 @@ data
         |-- tl_2023_us_country.shp.ea.iso.xml
         |-- tl_2023_us_country.shp.iso.xml
         |-- tl_2023_us_country.shx
-~~~
-
+```
 
 ## Command Line Interpreter (CLI)
 
 A CLI is available that makes it easy to interact
 with the service:
-~~~console
+
+```console
 python ./src/cli/cli_shapefile.py $VERBOSE --host $HOST --port $PORT --help
 
 usage: cli_shapefile.py [-h] [--verbose] --host HOST --port PORT {transform,statistics,simplify,buffer,view} ...
@@ -250,7 +257,7 @@ options:
   --verbose             Enable verbose output
   --host HOST           Server host
   --port PORT           Server port
-~~~
+```
 
 ## Convert Shapefiles to WGS84 Format
 
@@ -259,12 +266,12 @@ called WGS84 which uses a latitude/longitude coordinate system.
 This command will transform common formats to WGS84, and output
 the resulting files in the same location of the original
 with `-wgs84` appended to their file name:
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/CAN/lcd_000b21a_e.shp" ;
 python ./src/cli/cli_shapefile.py $VERBOSE transform \
     --shapefile "$SHAPEFILE"
-~~~
-
+```
 
 ## Get Statistics for a Shapefile
 
@@ -272,7 +279,8 @@ Shapefile optimization is dependent upon understanding the attributes,
 of the shapefile.
 
 Example: World map
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/WORLD/world-administrative-boundaries.shp" ;
 python ./src/cli/cli_shapefile.py $VERBOSE statistics \
     --shapefile "$SHAPEFILE"
@@ -304,11 +312,12 @@ python ./src/cli/cli_shapefile.py $VERBOSE statistics \
   :
   :
 }
-~~~
+```
 
 Example: USA map (is relatively simple, with 3371 polygons, but
 has lots of attributes):
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/USA/tl_2023_us_county.shp" ;
 python ./src/cli/cli_shapefile.py $VERBOSE statistics \
     --shapefile "$SHAPEFILE"
@@ -340,12 +349,13 @@ python ./src/cli/cli_shapefile.py $VERBOSE statistics \
   :
   :
 }
-~~~
+```
 
 Example: Canada map (is complex, with 176209 polygons,
 with the bulk of the polygons actually contained in
 multi-polygons):
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/CAN/lcd_000b21a_e-wgs84.shp" ;
 python ./src/cli/cli_shapefile.py $VERBOSE statistics \
     --shapefile "$SHAPEFILE"
@@ -377,20 +387,20 @@ python ./src/cli/cli_shapefile.py $VERBOSE statistics \
   :
   :
 }
-~~~
+```
 
 ## Simplify Shapefiles
 
 Maps can be quite detailed with many complex polygons (the more
-vertices a polygon has, the more complex it is).  Unfortunately,
+vertices a polygon has, the more complex it is). Unfortunately,
 the more complex the shape is, and the more lengthy any processing
-becomes.  To address this, a shapefile can be "simplified", which
+becomes. To address this, a shapefile can be "simplified", which
 will reduce the number of vertices for the shape
 polygons (and multipolygons).
 
 The optimal tolerance seems to be "0.01" which dramatically shrinks the
 shapefile and number of vertices (and, at times, polygons) while keeping
-a coherent shape without empty spots.  The smaller and less complex
+a coherent shape without empty spots. The smaller and less complex
 shapefile also significantly speeds up processing.
 
 Note that higher tolerances can work, but they have a tendency
@@ -403,41 +413,43 @@ Shapefile libraries have a "tolerance" parameter which determines
 how much simplification occurs. Here's what it means in real terms:
 
 1. **Definition of Tolerance**: Tolerance is the maximum distance that
-the simplified geometry is allowed to deviate from the original geometry.
-It sets a threshold for how much the simplification process can
-alter the shape of the geometries in the shapefile.
+   the simplified geometry is allowed to deviate from the original geometry.
+   It sets a threshold for how much the simplification process can
+   alter the shape of the geometries in the shapefile.
 
 2. **Unit of Measurement**: The unit of the tolerance value is the
-same as the coordinate system of your shapefile. If your shapefile
-is in a geographic coordinate system (like WGS 84), the tolerance
-is in degrees. If it's in a projected coordinate system, it's
-usually in meters or feet.
+   same as the coordinate system of your shapefile. If your shapefile
+   is in a geographic coordinate system (like WGS 84), the tolerance
+   is in degrees. If it's in a projected coordinate system, it's
+   usually in meters or feet.
 
 3. **Practical Implication**:
+
    - A smaller tolerance value means that the simplified geometry
-   will stay closer to the original geometry, preserving more detail.
+     will stay closer to the original geometry, preserving more detail.
    - A larger tolerance value allows for greater deviation, which
-   means more simplification and less detail. This can significantly
-   alter the appearance and spatial relationships of the geometries,
-   especially for complex shapes.
+     means more simplification and less detail. This can significantly
+     alter the appearance and spatial relationships of the geometries,
+     especially for complex shapes.
 
 4. **Real-World Example**:
+
    - If you set a tolerance of 1 meter in a shapefile with a
-   projected coordinate system, the simplified geometries will
-   deviate from their original shape by no more than 1 meter.
+     projected coordinate system, the simplified geometries will
+     deviate from their original shape by no more than 1 meter.
    - If your shapefile is in a geographic coordinate system,
-   and you set a tolerance of 0.0001 degrees, this translates
-   to a deviation of about 11 meters at the equator (since a
-   degree of latitude is approximately 111 kilometers).
+     and you set a tolerance of 0.0001 degrees, this translates
+     to a deviation of about 11 meters at the equator (since a
+     degree of latitude is approximately 111 kilometers).
 
 5. **Use Cases**:
    - Simplification is often used to reduce file size and
-   speed up processing. It's particularly useful for visualization
-   and when high precision is not required.
+     speed up processing. It's particularly useful for visualization
+     and when high precision is not required.
    - However, it's essential to choose an appropriate tolerance
-   considering the scale and purpose of your analysis. Over-simplification
-   can lead to loss of critical details and misrepresentation of
-   spatial relationships.
+     considering the scale and purpose of your analysis. Over-simplification
+     can lead to loss of critical details and misrepresentation of
+     spatial relationships.
 
 For practical purposes, the conversion of the given tolerance values
 from degrees to kilometers at the equator is as follows:
@@ -448,7 +460,7 @@ from degrees to kilometers at the equator is as follows:
 - 0.10 degrees = 11.1 km
 - 0.01 degrees = 1.11 km (1111 meters)
 - 0.001 degrees = 0.111 km (111 meters)
-- 0.0001 degrees = 0.0111 km  (11 meters)
+- 0.0001 degrees = 0.0111 km (11 meters)
 
 This conversion is based on the approximation that one degree of
 latitude (or longitude at the equator) is approximately 111 kilometers.
@@ -467,7 +479,8 @@ The command will simplify and display statistics by default, with an optional
 `--path` parameter that will store the result into a new shapefile.
 
 Simplify the WORLD map (notice the reduced number of vertices):
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/WORLD/world-administrative-boundaries.shp" ;
 TOLERANCE=0.1 ;
 python ./src/cli/cli_shapefile.py $VERBOSE simplify \
@@ -501,10 +514,11 @@ python ./src/cli/cli_shapefile.py $VERBOSE simplify \
   :
   :
 }
-~~~
+```
 
 Simplify the USA map (notice the reduced number of vertices):
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/USA/tl_2023_us_county.shp" ;
 TOLERANCE=0.1 ;
 python ./src/cli/cli_shapefile.py $VERBOSE simplify \
@@ -538,14 +552,14 @@ python ./src/cli/cli_shapefile.py $VERBOSE simplify \
   :
   :
 }
-~~~
+```
 
 Simplify the CAN (Canada) map (notice the reduced number of vertices).
 In this example the `--path` argument is provided, which will store the
 result as a new shapefile. This will produce output in the file specified
 in path, as well as several similarly named files in the same directory.
 
-~~~bash
+```bash
 SHAPEFILE="./data/shapefiles/CAN/lcd_000b21a_e-wgs84.shp" ;
 TOLERANCE=0.01 ;
 PATH="./data/shapefiles/CAN/lcd_000b21a_e-wgs84-simplified.shp"
@@ -582,12 +596,12 @@ python ./src/cli/cli_shapefile.py $VERBOSE simplify \
   :
   :
 }
-~~~
+```
 
 ## Buffer Shapefile
 
 Some calculations may require the shapefile to be extended around
-its perimeter.  This is called "buffering". Buffering a
+its perimeter. This is called "buffering". Buffering a
 shapefile creates new geometries that
 represent a specified distance around existing features, which
 is extremely useful for a wide range of spatial analyses and
@@ -603,45 +617,45 @@ is quite practical and widely used in geographic information
 system (GIS) analyses. Here’s how it works in practical terms:
 
 1. **Buffering Points**: If your shapefile contains points (like
-locations of trees, wells, or landmarks), buffering these points
-creates circles (or polygons approximating circles) around each
-point. The radius of each circle is the buffer distance you specify.
-For instance, creating a 10-meter buffer around trees in a park
-would result in circular areas with a 10-meter radius around
-each tree.
+   locations of trees, wells, or landmarks), buffering these points
+   creates circles (or polygons approximating circles) around each
+   point. The radius of each circle is the buffer distance you specify.
+   For instance, creating a 10-meter buffer around trees in a park
+   would result in circular areas with a 10-meter radius around
+   each tree.
 
 2. **Buffering Lines**: For line features (like roads, rivers,
-or utility lines), buffering adds a corridor of a specified
-width around each line. This buffer extends equally on both
-sides of the line. For example, a 5-meter buffer around a road
-would create a corridor 10 meters wide (5 meters on each side)
-along the entire road.
+   or utility lines), buffering adds a corridor of a specified
+   width around each line. This buffer extends equally on both
+   sides of the line. For example, a 5-meter buffer around a road
+   would create a corridor 10 meters wide (5 meters on each side)
+   along the entire road.
 
 3. **Buffering Polygons**: When buffering polygons (like
-buildings, lakes, or land parcels), the operation creates a
-new polygon larger than the original, with the added width
-being the buffer distance. If the buffer distance is negative,
-the new polygon is smaller, effectively creating an inner
-buffer. For instance, buffering a lake with a 20-meter buffer
-might be used to designate a protective zone around the lake.
+   buildings, lakes, or land parcels), the operation creates a
+   new polygon larger than the original, with the added width
+   being the buffer distance. If the buffer distance is negative,
+   the new polygon is smaller, effectively creating an inner
+   buffer. For instance, buffering a lake with a 20-meter buffer
+   might be used to designate a protective zone around the lake.
 
 Practical applications include:
 
 - **Proximity Analysis**: Buffering is commonly used to identify
-areas within a certain distance of a feature. For instance, you might
-buffer schools and then analyze what facilities (like parks or
-libraries) fall within that buffer zone.
+  areas within a certain distance of a feature. For instance, you might
+  buffer schools and then analyze what facilities (like parks or
+  libraries) fall within that buffer zone.
 
 - **Environmental Planning**: To protect sensitive areas, a buffer
-zone might be created around them. For example, creating buffer
-zones around wetlands to regulate construction and preserve ecosystems.
+  zone might be created around them. For example, creating buffer
+  zones around wetlands to regulate construction and preserve ecosystems.
 
 - **Safety and Regulations**: Buffer zones around utilities, such
-as gas pipelines, can be used to enforce safety regulations.
+  as gas pipelines, can be used to enforce safety regulations.
 
 - **Impact Studies**: In assessing the impact of a new development,
-buffers can be used to visualize and analyze the areas that will
-be affected.
+  buffers can be used to visualize and analyze the areas that will
+  be affected.
 
 Buffer zones are often visualized on maps to clearly show the
 areas around features that are within a certain distance. This
@@ -656,7 +670,8 @@ of the shapefile.
 Buffer a shapefile using either degrees or meters units (both
 distances in degrees and meters are shown - pick
 the distance and units from below):
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/WORLD/world-administrative-boundaries.shp" ;
 DISTANCE=11100 ;
 DISTANCE_UNITS="meters"
@@ -694,14 +709,15 @@ python ./src/cli/cli_shapefile.py $VERBOSE buffer \
   :
   :
 }
-~~~
+```
 
 ## View a Raw Shapefile
 
-Create an HTML file to view a raw shapefile.  Note that several shapefiles
-are available, so you can pick the one you want to use.  When complete,
+Create an HTML file to view a raw shapefile. Note that several shapefiles
+are available, so you can pick the one you want to use. When complete,
 point your browser to the output path to view the output:
-~~~bash
+
+```bash
 SHAPEFILE="./data/shapefiles/CAN/lcd_000b21a_e-wgs84.shp" ;
 SHAPEFILE="./data/shapefiles/USA/tl_2023_us_county.shp" ;
 SHAPEFILE="./data/shapefiles/WORLD/world-administrative-boundaries.shp" ;
@@ -710,7 +726,7 @@ OUTPUT_PATH="./tmp/view.html"
 python ./src/cli/cli_shapefile.py $VERBOSE view \
     --shapefile "$SHAPEFILE" \
     --path "$OUTPUT_PATH"
-~~~
+```
 
 [1]: https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York
 [2]: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/index2021-eng.cfm?year=21

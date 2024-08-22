@@ -518,4 +518,3 @@ class Shape:
                     cells.update(overlap_cells)
 
         return cells
-
