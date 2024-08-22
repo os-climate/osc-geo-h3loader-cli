@@ -2,14 +2,15 @@
 
 Our Geospatial Data Mesh will permit searching for data in
 a number of ways:
+
 - by latitude and longitude, returning a point value (for the
-nearest cell centroid), or all cells for a radius around this coordinate
+  nearest cell centroid), or all cells for a radius around this coordinate
 - by a cell (H3) index, returning a point value (for the
-nearest cell centroid), or all cells for a radius around this coordinate
+  nearest cell centroid), or all cells for a radius around this coordinate
 
 However, a third option is required - the ability to search for
 all cells (and hence their attributes) that are within a
-particular shapefile.  The shapefile provides the
+particular shapefile. The shapefile provides the
 boundary which is latitude/longitude (or other coordinate system)
 for a given region. To provide an outstanding user experience we will make
 shapefiles a primary search element.
@@ -19,29 +20,29 @@ shapefiles to probably be optimized /simplified to make
 searching/filtering efficient and effective - this capability
 is supported via our "Shape" class (in shape.py).
 
-To do this, we will need a repository of shapefiles.  This
+To do this, we will need a repository of shapefiles. This
 section documents how to register and unregister a shapefile
 as well as get an inventory of registered shapefiles.
 
 There are a few concepts to be aware of with respect
 to the shapefile repository:
-- Shapefiles are actually a collection of files,
-centered around a ".shp" file.  These other files
-support broader shapefile capabilities and generally
-must accompany the actual .shp file to be able to
-process and consume shapefile
-- Our repository will retain the full group of
-files and make them known by a single name in
-our repository; Currently this name has no constraints
-(it is just a string) but it is expected that
-in the future we may make this a bit more expressive
-(perhaps including a fully qualified name that
-incorporates a domain)
-- The full set of shapefiles are registered as a
-ZIP file, which is a compressed copy of the files; Upon successful
-registration, these files are uncompressed for subsequent
-use
 
+- Shapefiles are actually a collection of files,
+  centered around a ".shp" file. These other files
+  support broader shapefile capabilities and generally
+  must accompany the actual .shp file to be able to
+  process and consume shapefile
+- Our repository will retain the full group of
+  files and make them known by a single name in
+  our repository; Currently this name has no constraints
+  (it is just a string) but it is expected that
+  in the future we may make this a bit more expressive
+  (perhaps including a fully qualified name that
+  incorporates a domain)
+- The full set of shapefiles are registered as a
+  ZIP file, which is a compressed copy of the files; Upon successful
+  registration, these files are uncompressed for subsequent
+  use
 
 ## Prerequisites
 
@@ -49,9 +50,10 @@ use
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~bash
+
+```bash
 source ./bin/environment.sh
-~~~
+```
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -59,47 +61,52 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~bash
+
+```bash
 $PROJECT_DIR/bin/venv.sh
-~~~
+```
 
 Once your virtual environment has been created, it can be activated
-as follows (note: you *must* activate the virtual environment
+as follows (note: you _must_ activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~bash
+
+```bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~
+```
 
 Install the required libraries as follows:
-~~~bash
-pip install -r requirements.txt
-~~~
 
+```bash
+pip install -r requirements.txt
+```
 
 ## Command Line Interpreter (CLI)
 
 A CLI is available that makes it easy to interact
 with the service:
-~~~bash
+
+```bash
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT --help
 
-~~~
+```
 
 ## Registering a Shapefile
 
-Let's first create a shapefile ZIP file.  This will ZIP the
+Let's first create a shapefile ZIP file. This will ZIP the
 contents of the directory "./tmp/WORLD" and put it in a
 file called ./tmp/WORLD.zip:
-~~~bash
+
+```bash
 cd ./tmp/WORLD ;
 zip -r ../WORLD.zip * ;
 cd - ;
-~~~
+```
 
 Now that we have a ZIP representation of the shapefile,
 let's register it with the repository:
-~~~bash
+
+```bash
 REPOSITORY="./repository" ;
 NAME="WORLD" ;
 CONTENTS="./tmp/WORLD.zip" ;
@@ -111,13 +118,14 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT register \
 {
   "status": "successful"
 }
-~~~
+```
 
 ## Viewing Shapefile Inventory in the Repository
 
 Now that we have registered a shapefile, we can see
 what named shapefiles exist in our repository:
-~~~bash
+
+```bash
 REPOSITORY="./repository" ;
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT inventory \
     --repository "$REPOSITORY"
@@ -125,14 +133,15 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT inventory 
 [
   "WORLD"
 ]
-~~~
+```
 
 ## Unregistering a Shapefile
 
 Once registered, a shapefile name (and its contents) can be unregistered,
-which will remove it from the repository.  Let's remove the
+which will remove it from the repository. Let's remove the
 previously registered shapefile:
-~~~bash
+
+```bash
 REPOSITORY="./repository" ;
 NAME="WORLD" ;
 python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT unregister \
@@ -142,4 +151,4 @@ python ./src/cli/cli_repository.py $VERBOSE --host $HOST --port $PORT unregister
 {
   "status": "successful"
 }
-~~~
+```

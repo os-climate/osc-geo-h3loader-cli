@@ -11,4 +11,3 @@ mode: create
 
 shapefile: ./data/shapefiles/WORLD/world-administrative-boundaries.shp
 region: Spain
-

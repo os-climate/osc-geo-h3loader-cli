@@ -74,5 +74,3 @@ class CliExecShapefile:
         if path:
             s.save(path)
         return s.statistics()
-
-

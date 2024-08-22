@@ -39,5 +39,3 @@ class CliExecRepository:
         r = Repository(repository)
         result = r.inventory()
         return result
-
-

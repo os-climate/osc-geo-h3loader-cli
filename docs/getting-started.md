@@ -6,9 +6,10 @@
 
 Some environment variables are used by various code and scripts.
 Set up your environment as follows (note that "source" is used)
-~~~bash
+
+```bash
 source ./bin/environment.sh
-~~~
+```
 
 It is recommended that a Python virtual environment be created.
 Several convenience scripts are available to create and activate
@@ -16,22 +17,25 @@ a virtual environment.
 
 To create a new virtual environment run the below command
 (it will create a directory called "venv" in your current working directory):
-~~~bash
+
+```bash
 $PROJECT_DIR/bin/venv.sh
-~~~
+```
 
 Once your virtual environment has been created, it can be activated
-as follows (note: you *must* activate the virtual environment
+as follows (note: you _must_ activate the virtual environment
 for it to be used, and the command requires `source` to ensure
 environment variables to support venv are established correctly):
-~~~bash
+
+```bash
 source $PROJECT_DIR/bin/vactivate.sh
-~~~
+```
 
 Install the required libraries as follows:
-~~~bash
+
+```bash
 pip install -r requirements.txt
-~~~
+```
 
 ### Running as a Docker Image
 
@@ -51,9 +55,9 @@ $PROJECT_DIR/bin/dockerize.sh
 
 In order to publish this image the `DOCKER_TOKEN` environment variable
 must be set to a dockerhub token that is associated with the username set in the
-`DOCKER_USERNAME` environment variable. Additionally, the 
-`DOCKER_REGISTRY` environment variable must be set if publishing 
-to a custom registry. 
+`DOCKER_USERNAME` environment variable. Additionally, the
+`DOCKER_REGISTRY` environment variable must be set if publishing
+to a custom registry.
 
 Then the below command can be executed to create and publish an image,
 with the `--publish` argument controlling whether the image is published,
@@ -68,7 +72,7 @@ $PROJECT_DIR/bin/dockerize.sh --publish [false|custom|dockerhub] [--latest] [--v
 
 Run this image with the desired CLI command in order to use it. It is
 recommended that volumes be set up for inputs and outputs,
-in order to allow persistence of data. 
+in order to allow persistence of data.
 
 ### Retrieve shapefiles
 
@@ -78,24 +82,27 @@ In order to run the below examples, shapefiles will need to be downloaded from
 the following link:
 
 Shapefiles source:
+
 - [world-administrative-boundaries.zip][1]
 
-Retrieved from parent site: 
-https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/
+Retrieved from parent site:
+<https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/>
+
 - retrieved as a dataset from the "Geographic file formats" section,
-"Shapefile" element, by clicking the "Whole dataset" link
+  "Shapefile" element, by clicking the "Whole dataset" link
 
 Create the `data/shapefiles/WORLD` directory as below (if it does not
 already exist)
-~~~bash
+
+```bash
 mkdir -p ./data/shapefiles/WORLD
-~~~
+```
 
 Unzip the `world-administrative-boundaries.zip` file into the
 `data/shapefiles/WORLD` directory. This should result in a
 directory structure that looks like below:
 
-~~~console
+```console
 data
 |-- shapefiles
     |-- WORLD
@@ -104,7 +111,7 @@ data
         |-- world-adminstrative-boundaries.dbf
         |-- world-adminstrative-boundaries.shp
         |-- world-adminstrative-boundaries.shx
-~~~
+```
 
 ### Retrieve Data
 
@@ -113,17 +120,18 @@ and is used as the raw data for the examples in this README. It can be
 retrieved from the below links:
 
 GISS Temperature:
+
 - [v4.mean_GISS_homogenized.txt](https://data.giss.nasa.gov/gistemp/station_data_v4_globe/v4.mean_GISS_homogenized.txt.gz)
 - [stations.txt](https://data.giss.nasa.gov/gistemp/station_data_v4_globe/station_list.txt)
 
-These were retrieved from this parent site: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/
+These were retrieved from this parent site: <https://data.giss.nasa.gov/gistemp/station_data_v4_globe/>
 
 Create the `data/geo_data/temperatures` directory using the
 below command (if it does not already exist):
 
-~~~bash
+```bash
 mkdir -p data/geo_data/temperatures
-~~~
+```
 
 Copy both the `v4.mean_GISS_homogenized.txt` and `stations.txt` to the
 `data/geo_data/temperatures` directory.
@@ -147,9 +155,10 @@ python ./examples/loading/common/temp_giss_to_csv.py \
 ### Create directories
 
 Create the directories needed for running the examples:
-~~~bash
+
+```bash
 mkdir ./tmp
-~~~
+```
 
 ## Loading Data
 
@@ -171,7 +180,7 @@ python ./src/cli/cli_load.py load \
 --config_path $CONFIG_PATH
 ```
 
-For more information on loading datasets, see the 
+For more information on loading datasets, see the
 [loading README](/docs/README-loading.md).
 
 ## Register the new dataset
@@ -202,11 +211,11 @@ python ./src/cli/cli_metadata.py $VERBOSE addmeta \
 
 To view the current metadata, run the below command:
 
-~~~bash
+```bash
 DATABASE_DIR="./tmp" ;
 python ./src/cli/cli_metadata.py $VERBOSE showmeta \
     --database_dir $DATABASE_DIR
-~~~
+```
 
 ### Visualize dataset
 
@@ -215,7 +224,7 @@ a red color scale, over Germany. The visualization can be seen by
 loading the output file (`./tmp/giss_temperature_dec_2022_6_Germany.html`) in
 a web browser.
 
-~~~bash
+```bash
 DATABASE_DIR="./tmp" ;
 DATASET="giss_temperature_2022_12_example" ;
 RESOLUTION=6 ;
@@ -246,6 +255,6 @@ python ./src/cli/cli_visualize.py $VERBOSE visualize-dataset \
 --threshold $THRESHOLD \
 --year $YEAR \
 --month $MONTH
-~~~
+```
 
 [1]: https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/world-administrative-boundaries/exports/shp?lang=en&timezone=America%2FNew_York

@@ -483,7 +483,3 @@ class HexGridVisualizer(AbstractVisualizer):
 
         return min_opacity + (
                     max_opacity - min_opacity) * adjustment_factor_data
-
-
-
-
