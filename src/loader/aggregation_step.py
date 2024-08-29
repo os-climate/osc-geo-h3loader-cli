@@ -15,7 +15,7 @@ import h3
 import pandas
 from pandas import DataFrame
 
-from common.const import LOGGING_FORMAT, CELL_COL
+from common.const import LOGGING_FORMAT, CELL_COL, LONGITUDE_COL, LATITUDE_COL
 
 # Set up logging
 
@@ -85,7 +85,24 @@ class CellAggregationStep:
 
         with_agg = groups.agg(**self.agg_map).reset_index()
 
-        return with_agg
+        with_cell_ll = self._add_cell_centroid_lat_long(with_agg)
+
+        return with_cell_ll
+
+    def _add_cell_centroid_lat_long(self, in_df: DataFrame) -> DataFrame:
+        def cell_to_lat(row):
+            cell = row['h3_cell']
+            lat, long = h3.h3_to_geo(cell)
+            return lat
+
+        def cell_to_long(row):
+            cell = row['h3_cell']
+            lat, long = h3.h3_to_geo(cell)
+
+            return long
+        in_df[LATITUDE_COL] = in_df.apply(cell_to_lat, axis='columns')
+        in_df[LONGITUDE_COL] = in_df.apply(cell_to_long, axis='columns')
+        return in_df
 
     def _add_cell_column(self, in_df: DataFrame) -> DataFrame:
         def to_cell(row):

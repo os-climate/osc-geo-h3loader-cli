@@ -58,15 +58,14 @@ class TestCellAggregationStep:
 
         assert "h3_cell" in out.columns
 
-    def test_lat_long_not_in_output(self, agg_df):
+    def test_lat_long_in_output(self, agg_df):
         agg_step = MinAggregation({})
         all_agg = CellAggregationStep([agg_step], 1, ['value1', 'value2'], [])
 
         out = all_agg.run(agg_df)
 
-        assert len(out.columns) == 3
-        assert "latitude" not in out.columns
-        assert "longitude" not in out.columns
+        assert "latitude" in out.columns
+        assert "longitude" in out.columns
 
     def test_output_name_format_multiple_built_in_agg(self, agg_df):
         agg_min = MinAggregation({})
@@ -79,6 +78,8 @@ class TestCellAggregationStep:
         out = all_agg.run(agg_df)
         all_expected_cols = {
             "h3_cell",
+            "latitude",
+            "longitude",
             "value1_min",
             "value2_min",
             "value1_max",
