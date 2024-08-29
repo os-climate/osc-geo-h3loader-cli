@@ -5,6 +5,7 @@ import time
 from typing import List, Tuple, Dict, Set
 
 import duckdb
+import h3
 import pytest
 from pandas import DataFrame
 
@@ -190,14 +191,28 @@ class TestLoadingPipeline:
         pipeline.run()
 
         out = read_temp_db(dataset)
+        def round_latlong(t:Tuple) -> Tuple:
+            as_l = list(t)
+            as_l[5] = round(as_l[5], 4)
+            as_l[6] = round(as_l[6], 4)
+            return tuple(as_l)
+
+        out = list(map(
+            round_latlong,
+            out
+        ))
 
         # the same as the raw data in the initial file
+        cell1_lat, cell1_long = h3.h3_to_geo('8110bffffffffff')
+        cell2_lat, cell2_long = h3.h3_to_geo('81defffffffffff')
         expected = {
-            ('8110bffffffffff', 0, 10, 0, 100),
-            ('81defffffffffff', 0, 10, 0, 100),
+            ('8110bffffffffff', 0, 10, 0, 100,
+             cell1_lat, cell1_long),
+            ('81defffffffffff', 0, 10, 0, 100,
+             cell2_lat, cell2_long),
         }
 
-        assert set(out) == expected
+        assert round_floats(set(out)) == round_floats(expected)
 
     def test_fail_if_agg_but_no_res(self, database_dir):
         parquet_file = data_dir + "/2_cell_agg.parquet"
@@ -292,16 +307,21 @@ class TestLoadingPipeline:
 
         out = read_temp_db(dataset)
 
+        cell1_lat, cell1_long = h3.h3_to_geo('8110bffffffffff')
+        cell2_lat, cell2_long = h3.h3_to_geo('81defffffffffff')
+
         def f(i: int):
             return (i + 1) * 2
 
         # the same as the raw data in the initial file
         expected = {
-            ('8110bffffffffff', f(0), f(10), f(0), f(100)),
-            ('81defffffffffff', f(0), f(10), f(0), f(100)),
+            ('8110bffffffffff', f(0), f(10), f(0), f(100),
+             cell1_lat, cell1_long),
+            ('81defffffffffff', f(0), f(10), f(0), f(100),
+             cell2_lat, cell2_long),
         }
 
-        assert round_floats(set(out)) == expected
+        assert round_floats(set(out)) == round_floats(expected)
 
     def test_additional_key_cols(self, database_dir):
         parquet_file = data_dir + "with_company.parquet"
@@ -332,16 +352,34 @@ class TestLoadingPipeline:
         pipeline.run()
 
         out = read_temp_db(dataset)
+        def round_latlong(t:Tuple) -> Tuple:
+            as_l = list(t)
+            as_l[5] = round(as_l[5], 4)
+            as_l[6] = round(as_l[6], 4)
+            return tuple(as_l)
+
+        out = list(map(
+            round_latlong,
+            out
+        ))
+
+        # the same as the raw data in the initial file
+        cell1_lat, cell1_long = h3.h3_to_geo('8110bffffffffff')
+        cell2_lat, cell2_long = h3.h3_to_geo('81defffffffffff')
 
         # the same as the raw data in the initial file
         expected = {
-            ('company1', '8110bffffffffff', 0, 10, 0, 100),
-            ('company2', '8110bffffffffff', 2, 2, 20, 20),
-            ('company1', '81defffffffffff', 0, 10, 0, 100),
-            ('company2', '81defffffffffff', 2, 2, 20, 20)
+            ('company1', '8110bffffffffff', 0, 10, 0, 100,
+             cell1_lat, cell1_long),
+            ('company2', '8110bffffffffff', 2, 2, 20, 20,
+             cell1_lat, cell1_long),
+            ('company1', '81defffffffffff', 0, 10, 0, 100,
+             cell2_lat, cell2_long),
+            ('company2', '81defffffffffff', 2, 2, 20, 20,
+             cell2_lat, cell2_long)
         }
 
-        assert set(out) == expected
+        assert round_floats(set(out)) == round_floats(expected)
 
     def test_metadata_creation(self, database_dir):
         parquet_file = data_dir + "/2_cell_agg.parquet"
