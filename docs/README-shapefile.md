@@ -424,7 +424,6 @@ how much simplification occurs. Here's what it means in real terms:
    usually in meters or feet.
 
 3. **Practical Implication**:
-
    - A smaller tolerance value means that the simplified geometry
      will stay closer to the original geometry, preserving more detail.
    - A larger tolerance value allows for greater deviation, which
@@ -433,7 +432,6 @@ how much simplification occurs. Here's what it means in real terms:
      especially for complex shapes.
 
 4. **Real-World Example**:
-
    - If you set a tolerance of 1 meter in a shapefile with a
      projected coordinate system, the simplified geometries will
      deviate from their original shape by no more than 1 meter.
